@@ -1,0 +1,15 @@
+version: '3.3'
+
+services:
+  sb-energy:
+    image: jaiobs/sb-energy:prod
+    container_name: sb-energy
+    ports:
+      - '4200:4200'
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '40k'
+        max-file: '20'
+    restart: always
+

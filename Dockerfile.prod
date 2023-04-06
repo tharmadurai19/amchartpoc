@@ -1,0 +1,14 @@
+FROM node:14.18.2 AS build
+RUN mkdir -p /app
+WORKDIR /app
+ADD package*.json /app/
+RUN npm install
+COPY . /app/
+RUN npm run build:prod
+
+FROM nginx:1.21.6
+RUN rm -rf /etc/nginx/conf.d/default.conf
+ADD nginx/  /etc/nginx/conf.d/
+COPY --from=build /app/dist/ /home/
+EXPOSE 4200
+
